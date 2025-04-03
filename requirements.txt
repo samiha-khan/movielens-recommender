@@ -4,3 +4,4 @@ scikit-surprise
 jinja2
 python-multipart
 numpy<2
+pandas

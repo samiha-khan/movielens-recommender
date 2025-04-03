@@ -22,7 +22,7 @@ def load_movie_titles():
 
 # ===== TRAIN SVD MODEL =====
 def train_model():
-    data = Dataset.load_builtin('ml-100k')  # loads u.data automatically
+    data = Dataset.load_builtin("ml-100k", prompt=False)  # loads u.data automatically
     trainset, testset = train_test_split(data, test_size=0.2, random_state=42)
 
     model = SVD()

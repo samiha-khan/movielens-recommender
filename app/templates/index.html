@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MovieLens Recommender 🎬</title>
+    <style>
+        body { font-family: sans-serif; padding: 2em; background: #f7f7f7; }
+        h1 { color: #333; }
+        input, button { padding: 0.5em; font-size: 1em; }
+        .movie { margin: 0.5em 0; padding: 0.5em; background: #fff; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <h1>🎥 Movie Recommender</h1>
+    <p>Enter a user ID (e.g. 196):</p>
+    <input type="number" id="userId" placeholder="User ID" />
+    <input type="number" id="topN" placeholder="Top N" value="5" min="1" />
+    <button onclick="getRecommendations()">Get Recommendations</button>
+
+    <div id="results"></div>
+
+    <script>
+        async function getRecommendations() {
+            const userId = document.getElementById('userId').value;
+            const topN = document.getElementById('topN').value || 5;
+            const res = await fetch(`/recommend/${userId}?n=${topN}`);
+            const data = await res.json();
+
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = "<h2>Results:</h2>";
+
+            data.recommendations.forEach(movie => {
+                const div = document.createElement('div');
+                div.className = 'movie';
+                div.innerHTML = `<strong>${movie.title}</strong><br/>Predicted Rating: ${movie.predicted_rating}`;
+                resultsDiv.appendChild(div);
+            });
+        }
+    </script>
+</body>
+</html>
